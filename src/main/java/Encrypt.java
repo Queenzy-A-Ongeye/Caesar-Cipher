@@ -1,53 +1,57 @@
-public class Encrypt{
-    private String plainText;
-    private int Shift;
+public class Encrypt {
+    private String mInputString;
+    private int mShift;
 
-    public String getPlainText(){
-        return plainText;
-    }
-    public int getShift(){
-        return Shift;
+    public String getmInputString(){
+        return mInputString;
     }
 
-    public Encrypt(String plainText, int Shift) {
-        if(Shift>26){
-            Shift  = Shift%26;
-        }else if (Shift<0) {
-            Shift = (Shift % 26) + 26;
+    public int getmShift(){
+        return mShift;
+    }
+
+    public Encrypt(String mInputString, int mShift) {
+        this.mInputString = mInputString;
+        this.mShift = mShift;
+    }
+
+    public static String encrypt(Encrypt encrypt){
+
+        if(encrypt.mShift > 26){
+            encrypt.mShift = encrypt.mShift % 26;
         }
-    }
-    String outputText= "";
-    int length = plainText.length();
-    for (int i = 0; i< length; i++){
-        char ch = plainText.charAt(i);
-        if (Character.isLetter(ch)){
-            if (Character.isLowerCase(ch)){
-                char cc = (char)(ch+Shift);
-                if (cc > 'z'){
-                    outputText += (char) (cc-(26 - Shift));
+        else if(encrypt.mShift < 0) {
+            encrypt.mShift = (encrypt.mShift % 26) + 26;
+        }
+
+        String outputString = "";
+        int length = encrypt.mInputString.length();
+        for (int i = 0; i < length ; i++) {
+            char cc = encrypt.mInputString.charAt(i);
+            if(Character.isLetter(cc)){
+                if(Character.isLowerCase(cc)){
+                    char c = (char)(cc+encrypt.mShift);
+                    if(c>'z'){
+                        outputString += (char)(cc - (26-encrypt.mShift));
+                    }
+                    else {
+                        outputString += c;
+                    }
                 }
-                else {
-                    outputText += cc;
+                else if(Character.isUpperCase(cc)){
+                    char c = (char)(cc+encrypt.mShift);
+                    if(c>'Z'){
+                        outputString += (char)(cc - (26-encrypt.mShift));
+                    }
+                    else {
+                        outputString += c;
+                    }
                 }
             }
-            else if (Character.isUpperCase(ch)){
-                char cc = (char)(ch+Shift);
-                if (cc > 'Z'){
-                    outputText += (char) (cc-(26 - Shift));
-                }
-                else {
-                    outputText += cc;
-                }
+            else{
+                outputString += cc;
             }
-
         }
-        else {
-            outputText += ch;
-        }
-//        String outputText1 = outputText;
-        return outputText;
-    }
-
-    private class length {
+        return outputString;
     }
 }
